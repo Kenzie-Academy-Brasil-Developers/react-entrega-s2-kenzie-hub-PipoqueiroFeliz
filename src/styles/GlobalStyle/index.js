@@ -33,7 +33,9 @@ export default createGlobalStyle`
         font-family: 'Inter', sans-serif;
         font-weight: 700;
     }
-    h1{font-size:18.27px;}
+    h1{
+        font-size:18.27px;
+    }
     h2{
         font-size: 16.24px;
         font-weight: 600;
