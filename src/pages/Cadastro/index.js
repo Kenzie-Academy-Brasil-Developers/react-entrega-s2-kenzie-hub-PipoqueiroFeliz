@@ -11,10 +11,11 @@ import axios from "axios";
 import Select from "../../Components/Forms/Select";
 
 import logo from "../../imgs/Logo.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Header } from "./styled";
 
-function Cadastro() {
+function Cadastro({ authentic }) {
   let navigate = useNavigate();
 
   const schema = yup.object().shape({
@@ -50,23 +51,26 @@ function Cadastro() {
     contato: "Opção de contato",
   };
   function submited(data) {
-    console.log(data);
 
     axios
       .post("https://kenziehub.herokuapp.com/users", data)
       .then((response) => {
+        toast.success("conta criada com sucesso!");
         navigate("/login");
-        console.log(response);
       })
       .catch((err) => {
         toast.error(err.response.data.message);
-        console.log(err.response.data.message);
-        console.log(err);
       });
+  }
+
+  if (authentic) {
+    navigate("/");
   }
   return (
     <>
-      <img src={logo} alt="kenziehub" />
+      <Header>
+        <img src={logo} alt="kenziehub" />
+      </Header>
       <StyledForms onSubmit={handleSubmit(submited)}>
         <h1>Crie sua conta</h1>
         <Input
@@ -117,7 +121,12 @@ function Cadastro() {
           placeholder={holders.contato}
           error={errors.contact?.message}
         />
-        <Select name="course_module" register={register} />
+        <Select
+          label="Módulo"
+          name="course_module"
+          error={errors.module?.message}
+          register={register}
+        />
 
         <Button type="submit">Cadastrar</Button>
       </StyledForms>

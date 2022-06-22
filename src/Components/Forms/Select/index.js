@@ -1,8 +1,11 @@
 import { Container } from "./style";
 
-function Select({ register, name }) {
+function Select({ label, error, register, name }) {
   return (
     <Container>
+      <p>
+        {label} {!!error && <span> - {error}</span>}
+      </p>
       <select {...register(name)}>
         <option value="Primeiro módulo (Introdução ao Frontend)">
           Primeiro módulo (Introdução ao Frontend)

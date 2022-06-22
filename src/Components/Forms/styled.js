@@ -5,9 +5,9 @@ const StyledForms = styled.form`
 
   width: 300px;
   padding: 33px 18px;
-  margin: 19px auto;
+  margin: 120px auto;
 
-  border-radius: 3.21px;
+  border-radius: 4px;
 
   h1 {
     text-align: center;
