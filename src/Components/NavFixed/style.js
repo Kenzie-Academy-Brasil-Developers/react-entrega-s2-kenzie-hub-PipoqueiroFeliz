@@ -24,7 +24,11 @@ export const Container = styled.div`
   button {
     margin: auto 0;
   }
-
+  @media screen and (min-width: 768px) {
+    .logoLogout {
+      width: 450px;
+    }
+  }
   @media screen and (min-width: 1024px) {
     .logoLogout {
       width: 750px;

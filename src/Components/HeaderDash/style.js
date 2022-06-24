@@ -18,7 +18,9 @@ export const StyledHeader = styled.div`
     font-size: 18px;
     line-height: 28px;
   }
-
+  @media screen and (min-width: 768px) {
+    width: 450px;
+  }
   @media screen and (min-width: 1024px) {
     width: 750px;
 

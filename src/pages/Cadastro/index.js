@@ -51,7 +51,6 @@ function Cadastro({ authentic }) {
     contato: "Opção de contato",
   };
   function submited(data) {
-
     axios
       .post("https://kenziehub.herokuapp.com/users", data)
       .then((response) => {
@@ -61,6 +60,9 @@ function Cadastro({ authentic }) {
       .catch((err) => {
         toast.error(err.response.data.message);
       });
+  }
+  function vaiLogin() {
+    navigate("/login");
   }
 
   if (authentic) {
@@ -129,6 +131,10 @@ function Cadastro({ authentic }) {
         />
 
         <Button type="submit">Cadastrar</Button>
+        <p className="span">Ja tem cadastro? faça o login!</p>
+        <Button whiteSchema onClick={vaiLogin}>
+          Login
+        </Button>
       </StyledForms>
     </>
   );

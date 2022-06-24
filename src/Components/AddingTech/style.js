@@ -40,7 +40,11 @@ export const StyledHeader = styled.div`
     cursor: pointer;
   }
 
+  @media screen and (min-width: 768px) {
+    width: 450px;
+  }
   @media screen and (min-width: 1024px) {
+    width: 300px;
     margin-top: 150px;
     animation: ${appearFromLeft} 1s;
   }
@@ -64,8 +68,11 @@ export const StyledAddingForms = styled.form`
     align-self: center;
     margin: 12px 0;
   }
-
+  @media screen and (min-width: 768px) {
+    width: 450px;
+  }
   @media screen and (min-width: 1024px) {
     animation: ${appearFromLeft} 1s;
+    width: 300px;
   }
 `;
