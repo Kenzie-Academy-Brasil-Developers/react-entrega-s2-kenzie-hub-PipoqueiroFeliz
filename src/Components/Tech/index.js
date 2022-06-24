@@ -5,8 +5,10 @@ import deletar from "../../imgs/delete.svg";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-function Tech({ statesTech, tech }) {
+function Tech({ statesFluxo, statesTech, tech }) {
   const [isAddingTech, setIsAddingTech, userTechs, setUserTechs] = statesTech;
+  const [isFluxoCard, setIsFluxoCard, fluxoContent, setFluxoContent] =
+    statesFluxo;
 
   function deletarTech() {
     const token = JSON.parse(localStorage.getItem("@kenzieHub:token"));
@@ -23,8 +25,15 @@ function Tech({ statesTech, tech }) {
       .catch((err) => console.log(err));
   }
 
+  function editarTech(event) {
+    if (event.target === event.currentTarget) {
+      setIsFluxoCard(true);
+      setFluxoContent(tech);
+    }
+  }
+
   return (
-    <Container>
+    <Container onClick={editarTech}>
       <p>{tech.title}</p>
       <span>
         {tech.status} <img onClick={deletarTech} src={deletar} alt="deletar" />

@@ -1,8 +1,11 @@
 import Tecnologies from "../Tecnologies";
 import { Container, Header, StyledMais } from "./style";
 
-function Main({ statesTech }) {
+function Main({ statesFluxo, statesTech }) {
   const [isAddingTech, setIsAddingTech, userTechs, setUserTechs] = statesTech;
+
+  const [isFluxoCard, setIsFluxoCard, fluxoContent, setFluxoContent] =
+    statesFluxo;
   function setAddingTech() {
     setIsAddingTech(!isAddingTech);
   }
@@ -12,7 +15,7 @@ function Main({ statesTech }) {
         <h2>Tecnologias</h2>
         <StyledMais onClick={setAddingTech}>+</StyledMais>
       </Header>
-      <Tecnologies statesTech={statesTech} techs={userTechs} />
+      <Tecnologies statesFluxo={statesFluxo} statesTech={statesTech} techs={userTechs} />
     </Container>
   );
 }

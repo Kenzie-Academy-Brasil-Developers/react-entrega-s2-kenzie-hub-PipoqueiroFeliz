@@ -11,9 +11,13 @@ import {
   Container,
   StyledHeader,
   StyledAddingForms,
+  Containerzin,
 } from "./style";
 
-function AddingTech({ statesTech }) {
+function FluxoCard({ statesFluxo, statesTech }) {
+  const [isFluxoCard, setIsFluxoCard, fluxoContent, setFluxoContent] =
+    statesFluxo;
+
   const [isAddingTech, setIsAddingTech, userTechs, setUserTechs] = statesTech;
 
   const schema = yup.object().shape({
@@ -29,21 +33,49 @@ function AddingTech({ statesTech }) {
     resolver: yupResolver(schema),
   });
 
-  function submited(data) {
+  function deletarTech() {
     const token = JSON.parse(localStorage.getItem("@kenzieHub:token"));
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post("https://kenziehub.herokuapp.com/users/techs", data, config)
+      .delete(
+        `https://kenziehub.herokuapp.com/users/techs/${fluxoContent.id}`,
+        config
+      )
       .then((resp) => {
-        setUserTechs([resp.data, ...userTechs]);
-        toast.success("Tecnologia cadastrada!");
-        setAddingTech();
+        const newTechs = userTechs.filter((tec) => tec.id !== fluxoContent.id);
+        setUserTechs(newTechs);
+        toast.success("tecnologia removida com sucesso!");
+        closeWindow();
       })
-      .catch((err) => toast.error("Não pode registrar com o mesmo nome!"));
+      .catch((err) => console.log(err));
+  }
+  function submited(data) {
+    console.log(data, fluxoContent.id);
+    const token = JSON.parse(localStorage.getItem("@kenzieHub:token"));
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .put(
+        `https://kenziehub.herokuapp.com/users/techs/${fluxoContent.id}`,
+        data,
+        config
+      )
+      .then((resp) => {
+        console.log(resp);
+        updateTechs(resp.data);
+        toast.success("Tecnologia alterada com sucesso");
+        closeWindow();
+      })
+      .catch((err) => console.log(err));
   }
 
+  function updateTechs(data) {
+    let techsFiltered = userTechs.filter((tech) => tech !== fluxoContent);
+    setUserTechs([data, ...techsFiltered], userTechs);
+  }
   const holders = {
     name: "Digite a tecnologia",
     email: "Digite seu email",
@@ -53,24 +85,25 @@ function AddingTech({ statesTech }) {
     contato: "Opção de contato",
   };
 
-  function setAddingTech() {
-    setIsAddingTech(!isAddingTech);
+  function closeWindow() {
+    setIsFluxoCard(!isFluxoCard);
   }
   function containerClicked(event) {
     if (event.target === event.currentTarget) {
-      setAddingTech();
+      closeWindow();
     }
   }
 
   return (
     <Container onClick={containerClicked}>
       <StyledHeader>
-        <p>Cadastrar Tecnologias</p>
-        <span onClick={setAddingTech}>X</span>
+        <p>Alterando tecnologia</p>
+        <span onClick={closeWindow}>X</span>
       </StyledHeader>
 
       <StyledAddingForms onSubmit={handleSubmit(submited)}>
         <Input
+          value={fluxoContent.title}
           name="title"
           label="Nome"
           type="name"
@@ -79,14 +112,20 @@ function AddingTech({ statesTech }) {
           error={errors.name?.message}
         />
         <SelectTech
+          value={fluxoContent.status}
           label="Selecionar status"
           error={errors.techLevel?.message}
           name="status"
           register={register}
         />
-        <Button type="submit">Cadastrar tecnologia!</Button>
+        <Button type="submit">Alterar tecnologia!</Button>
       </StyledAddingForms>
+      <Containerzin>
+        <Button whiteSchema onClick={deletarTech}>
+          Deletar tecnologia
+        </Button>
+      </Containerzin>
     </Container>
   );
 }
-export default AddingTech;
+export default FluxoCard;

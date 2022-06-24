@@ -13,6 +13,8 @@ export const Container = styled.div`
   padding: 0 18px;
   border-radius: 4px;
 
+  cursor: pointer;
+
   img {
     cursor: pointer;
     width: 12px;
